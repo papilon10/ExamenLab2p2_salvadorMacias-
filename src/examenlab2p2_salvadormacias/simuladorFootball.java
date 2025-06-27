@@ -4,13 +4,25 @@
  */
 package examenlab2p2_salvadormacias;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -170,6 +182,11 @@ public class simuladorFootball extends javax.swing.JFrame {
         });
 
         bbnMostarResultado.setText("Mostrar Resultado");
+        bbnMostarResultado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bbnMostarResultadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,14 +231,13 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         Thread tempJuego = new Thread(() -> {
             int segundos = 20;
-         //   int cuarto = segundos/4;
-            
+            //   int cuarto = segundos/4;
+
             try {
                 for (int i = 1; i <= segundos; i++) {
                     System.out.println("Segundo: " + i);
                     Thread.sleep(1000);
                     // System.out.println(i);
-                    
 
                     dialogEquipos.setVisible(false);
                     dialogNuevoJuego.setVisible(true);
@@ -229,9 +245,34 @@ public class simuladorFootball extends javax.swing.JFrame {
 
                     lbl_marcador.setText(cb_equipo.getSelectedItem().toString() + " " + " - " + " " + cb_rival.getSelectedItem().toString());
                     lbl_posesion.setText(cb_equipo.getSelectedItem().toString());
-                    lbl_tiempo.setText("tiempo: "+ i);
-                    lbl_cuarto.setText("cuarto: " + i/4);
-                    
+                    lbl_tiempo.setText("tiempo: " + i);
+                    lbl_cuarto.setText("cuarto: " + i / 4);
+
+                    textArea_Acciones.append(i + " s -" + cb_equipo.getSelectedItem().toString()
+                            + " corrieron un monton " + "\n");
+
+                    if (i == 20) {
+                        resultados.add(1);
+
+                        JFileChooser filechooser = new JFileChooser();
+                        int estado = filechooser.showSaveDialog(this);
+                        if (estado == JFileChooser.APPROVE_OPTION) {
+                            seleccionado = filechooser.getSelectedFile();
+                            try {
+
+                                BufferedWriter br = new BufferedWriter(new FileWriter(seleccionado, false));
+                                String nuevaInfo = lbl_marcador.getText();
+                                br.write("\n" + nuevaInfo);
+                                br.close();
+                                JOptionPane.showMessageDialog(this, "se  guardo el resultado");
+
+                            } catch (IOException ex) {
+
+                                Logger.getLogger(simuladorFootball.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
+                    }
 
                 }
 
@@ -246,6 +287,41 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_comenzarJuegoActionPerformed
+
+    private void bbnMostarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbnMostarResultadoActionPerformed
+
+        if (resultados.size()==0){
+            JOptionPane.showMessageDialog(this, "no hay resultados guardados");
+        }else{
+          JOptionPane.showMessageDialog(this, lbl_marcador.getText());
+        }
+
+      
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bbnMostarResultadoActionPerformed
+
+    private void leerResultado() {
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(seleccionado));
+            String linea = br.readLine();
+
+            while (linea != null) {
+
+                // jTextArea1.append(linea + "\n");
+                JOptionPane.showMessageDialog(this, linea);
+
+                linea = br.readLine();
+
+            }
+
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+            Logger.getLogger(simuladorFootball.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -295,6 +371,8 @@ public class simuladorFootball extends javax.swing.JFrame {
         });
     }
 
+    private File seleccionado;
+    ArrayList resultados = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bbnMostarResultado;
     private javax.swing.JButton btn_comenzarJuego;

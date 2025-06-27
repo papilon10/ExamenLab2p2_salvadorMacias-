@@ -26,15 +26,61 @@ public class simuladorFootball extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogNuevoJuego = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textArea_Acciones = new javax.swing.JTextArea();
+        dialogEquipos = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         btn_nuevoJuego = new javax.swing.JButton();
         bbnMostarResultado = new javax.swing.JButton();
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/examenlab2p2_salvadormacias/campo.jpg"))); // NOI18N
+
+        textArea_Acciones.setColumns(20);
+        textArea_Acciones.setRows(5);
+        jScrollPane1.setViewportView(textArea_Acciones);
+
+        javax.swing.GroupLayout dialogNuevoJuegoLayout = new javax.swing.GroupLayout(dialogNuevoJuego.getContentPane());
+        dialogNuevoJuego.getContentPane().setLayout(dialogNuevoJuegoLayout);
+        dialogNuevoJuegoLayout.setHorizontalGroup(
+            dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogNuevoJuegoLayout.createSequentialGroup()
+                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+        );
+        dialogNuevoJuegoLayout.setVerticalGroup(
+            dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dialogEquiposLayout = new javax.swing.GroupLayout(dialogEquipos.getContentPane());
+        dialogEquipos.getContentPane().setLayout(dialogEquiposLayout);
+        dialogEquiposLayout.setHorizontalGroup(
+            dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 538, Short.MAX_VALUE)
+        );
+        dialogEquiposLayout.setVerticalGroup(
+            dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 378, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/examenlab2p2_salvadormacias/Apple-Arcade-hero_big.jpg"))); // NOI18N
 
         btn_nuevoJuego.setText("nuevo juego");
+        btn_nuevoJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoJuegoActionPerformed(evt);
+            }
+        });
 
         bbnMostarResultado.setText("Mostrar Resultado");
 
@@ -68,6 +114,14 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_nuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoJuegoActionPerformed
+        //this.setVisible(false);
+        dialogNuevoJuego.setVisible(true);
+        dialogNuevoJuego.pack();
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_btn_nuevoJuegoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -107,6 +161,11 @@ public class simuladorFootball extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bbnMostarResultado;
     private javax.swing.JButton btn_nuevoJuego;
+    private javax.swing.JDialog dialogEquipos;
+    private javax.swing.JDialog dialogNuevoJuego;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea textArea_Acciones;
     // End of variables declaration//GEN-END:variables
 }

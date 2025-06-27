@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -23,6 +24,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -35,6 +37,7 @@ public class simuladorFootball extends javax.swing.JFrame {
      */
     public simuladorFootball() {
         initComponents();
+        textArea_Acciones.setEditable(false);
     }
 
     /**
@@ -54,6 +57,8 @@ public class simuladorFootball extends javax.swing.JFrame {
         lbl_cuarto = new javax.swing.JLabel();
         lbl_posesion = new javax.swing.JLabel();
         lbl_tiempo = new javax.swing.JLabel();
+        label_posicionCampo = new javax.swing.JLabel();
+        lbl_posesion1 = new javax.swing.JLabel();
         dialogEquipos = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -78,6 +83,10 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         lbl_tiempo.setText("jLabel5");
 
+        label_posicionCampo.setText("jLabel5");
+
+        lbl_posesion1.setText("posesion:");
+
         javax.swing.GroupLayout dialogNuevoJuegoLayout = new javax.swing.GroupLayout(dialogNuevoJuego.getContentPane());
         dialogNuevoJuego.getContentPane().setLayout(dialogNuevoJuegoLayout);
         dialogNuevoJuegoLayout.setHorizontalGroup(
@@ -88,18 +97,22 @@ public class simuladorFootball extends javax.swing.JFrame {
                     .addComponent(jScrollPane1))
                 .addContainerGap())
             .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
-                        .addComponent(lbl_posesion)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
                         .addComponent(lbl_marcador)
                         .addGap(248, 248, 248)
-                        .addComponent(lbl_tiempo)
+                        .addComponent(lbl_tiempo))
+                    .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(lbl_posesion1)
+                        .addGap(43, 43, 43)
+                        .addComponent(lbl_posesion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_cuarto)
-                        .addGap(109, 109, 109))))
+                        .addComponent(label_posicionCampo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_cuarto)
+                .addGap(109, 109, 109))
         );
         dialogNuevoJuegoLayout.setVerticalGroup(
             dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +123,10 @@ public class simuladorFootball extends javax.swing.JFrame {
                     .addComponent(lbl_cuarto)
                     .addComponent(lbl_marcador))
                 .addGap(21, 21, 21)
-                .addComponent(lbl_posesion)
+                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_posesion)
+                    .addComponent(label_posicionCampo)
+                    .addComponent(lbl_posesion1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,12 +246,23 @@ public class simuladorFootball extends javax.swing.JFrame {
     private void btn_comenzarJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_comenzarJuegoActionPerformed
 
         Thread tempJuego = new Thread(() -> {
-            int segundos = 20;
-            //   int cuarto = segundos/4;
+            int segundos = 75;
+            int yardasTotales = 100;
+            int yardaActual = 25;
+            int intentos = 4;
+            int puntosEquipo = 0;
+            int puntosRival = 0;
+            int x = 1;
+
+            boolean posesionJugador = true;
+
+            Random rand = new Random();
 
             try {
                 for (int i = 1; i <= segundos; i++) {
+                    int cuarto = i /11;
                     System.out.println("Segundo: " + i);
+
                     Thread.sleep(1000);
                     // System.out.println(i);
 
@@ -243,16 +270,58 @@ public class simuladorFootball extends javax.swing.JFrame {
                     dialogNuevoJuego.setVisible(true);
                     dialogNuevoJuego.pack();
 
-                    lbl_marcador.setText(cb_equipo.getSelectedItem().toString() + " " + " - " + " " + cb_rival.getSelectedItem().toString());
-                    lbl_posesion.setText(cb_equipo.getSelectedItem().toString());
+                    lbl_marcador.setText(cb_equipo.getSelectedItem().toString() + " "+ puntosEquipo + " -  " + puntosRival + " "+ cb_rival.getSelectedItem().toString());
+                    lbl_posesion.setText(posesionJugador ? cb_equipo.getSelectedItem().toString() : cb_rival.getSelectedItem().toString());
                     lbl_tiempo.setText("tiempo: " + i);
-                    lbl_cuarto.setText("cuarto: " + i / 4);
+                    lbl_cuarto.setText("cuarto: " + cuarto );
+                    label_posicionCampo.setText("Yarda actual: " + yardaActual);
 
-                    textArea_Acciones.append(i + " s -" + cb_equipo.getSelectedItem().toString()
-                            + " corrieron un monton " + "\n");
+                    int avance = rand.nextInt(11);
+                    yardaActual += avance;
+                    intentos--;
 
-                    if (i == 20) {
+                    String equipoActual = posesionJugador ? cb_equipo.getSelectedItem().toString() : cb_rival.getSelectedItem().toString();
+                    textArea_Acciones.append(i + " s - " + equipoActual + " corrió " + avance + " yardas\n");
+
+                    if (yardaActual >= yardasTotales) {
+                        textArea_Acciones.append("Touchdown de " + equipoActual + " +7 puntos\n");
+
+                        if (posesionJugador) {
+                            puntosEquipo += 7;
+                        } else {
+                            puntosRival += 7;
+                        }
+
+                        yardaActual = 25;
+                        intentos = 4;
+                        posesionJugador = !posesionJugador;
+                        textArea_Acciones.append("cambio de posesion portouchdown\n\n");
+                        continue;
+                    }
+
+                    if (intentos == 0) {
+                        textArea_Acciones.append("cambio de posesion por falta de intentos\n\n");
+
+                        yardaActual = 25;
+                        intentos = 4;
+                        posesionJugador = !posesionJugador;
+
+                        if (yardaActual >= yardasTotales) {
+                            textArea_Acciones.append("Touchdown de " + equipoActual + "\n");
+                        }
+
+                    }
+
+                    //   textArea_Acciones.append(i + " s -" + cb_equipo.getSelectedItem().toString()
+                    //           + " corrieron " + i + " yardas " + "\n");
+                    if (i == 0) {
+
+                    }
+
+                    x = x++;
+                    if (i == 75) {
                         resultados.add(1);
+                        JOptionPane.showMessageDialog(this, lbl_marcador.getText());
 
                         JFileChooser filechooser = new JFileChooser();
                         int estado = filechooser.showSaveDialog(this);
@@ -265,6 +334,9 @@ public class simuladorFootball extends javax.swing.JFrame {
                                 br.write("\n" + nuevaInfo);
                                 br.close();
                                 JOptionPane.showMessageDialog(this, "se  guardo el resultado");
+                                textArea_Acciones.setText(" ");
+                                filechooser.setVisible(false);
+                                // dialogNuevoJuego.setVisible(false);
 
                             } catch (IOException ex) {
 
@@ -281,7 +353,8 @@ public class simuladorFootball extends javax.swing.JFrame {
             }
             // dialogNuevoJuego.setVisible(false);
 
-        });
+        }
+        );
 
         tempJuego.start();
 
@@ -290,18 +363,16 @@ public class simuladorFootball extends javax.swing.JFrame {
 
     private void bbnMostarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbnMostarResultadoActionPerformed
 
-        if (resultados.size()==0){
+        if (resultados.size() == 0) {
             JOptionPane.showMessageDialog(this, "no hay resultados guardados");
-        }else{
-          JOptionPane.showMessageDialog(this, lbl_marcador.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, lbl_marcador.getText());
         }
-
-      
 
         // TODO add your handling code here:
     }//GEN-LAST:event_bbnMostarResultadoActionPerformed
 
-    private void leerResultado() {
+    private void leerResultado(File file) {
         try {
 
             BufferedReader br = new BufferedReader(new FileReader(seleccionado));
@@ -318,7 +389,8 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
-            Logger.getLogger(simuladorFootball.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simuladorFootball.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -337,16 +409,24 @@ public class simuladorFootball extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(simuladorFootball.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(simuladorFootball.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(simuladorFootball.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(simuladorFootball.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(simuladorFootball.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(simuladorFootball.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(simuladorFootball.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(simuladorFootball.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -371,7 +451,7 @@ public class simuladorFootball extends javax.swing.JFrame {
         });
     }
 
-    private File seleccionado;
+    public static File seleccionado;
     ArrayList resultados = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bbnMostarResultado;
@@ -386,9 +466,11 @@ public class simuladorFootball extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_posicionCampo;
     private javax.swing.JLabel lbl_cuarto;
     private javax.swing.JLabel lbl_marcador;
     private javax.swing.JLabel lbl_posesion;
+    private javax.swing.JLabel lbl_posesion1;
     private javax.swing.JLabel lbl_tiempo;
     private javax.swing.JTextArea textArea_Acciones;
     // End of variables declaration//GEN-END:variables

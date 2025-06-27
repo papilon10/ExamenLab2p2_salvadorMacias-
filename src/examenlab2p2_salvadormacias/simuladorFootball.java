@@ -4,6 +4,14 @@
  */
 package examenlab2p2_salvadormacias;
 
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  *
  * @author Apple
@@ -30,6 +38,10 @@ public class simuladorFootball extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea_Acciones = new javax.swing.JTextArea();
+        lbl_marcador = new javax.swing.JLabel();
+        lbl_cuarto = new javax.swing.JLabel();
+        lbl_posesion = new javax.swing.JLabel();
+        lbl_tiempo = new javax.swing.JLabel();
         dialogEquipos = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -46,6 +58,14 @@ public class simuladorFootball extends javax.swing.JFrame {
         textArea_Acciones.setRows(5);
         jScrollPane1.setViewportView(textArea_Acciones);
 
+        lbl_marcador.setText("jLabel5");
+
+        lbl_cuarto.setText("jLabel5");
+
+        lbl_posesion.setText("jLabel5");
+
+        lbl_tiempo.setText("jLabel5");
+
         javax.swing.GroupLayout dialogNuevoJuegoLayout = new javax.swing.GroupLayout(dialogNuevoJuego.getContentPane());
         dialogNuevoJuego.getContentPane().setLayout(dialogNuevoJuegoLayout);
         dialogNuevoJuegoLayout.setHorizontalGroup(
@@ -55,11 +75,31 @@ public class simuladorFootball extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addContainerGap())
+            .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                        .addComponent(lbl_posesion)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
+                        .addComponent(lbl_marcador)
+                        .addGap(248, 248, 248)
+                        .addComponent(lbl_tiempo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_cuarto)
+                        .addGap(109, 109, 109))))
         );
         dialogNuevoJuegoLayout.setVerticalGroup(
             dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogNuevoJuegoLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(15, 15, 15)
+                .addGroup(dialogNuevoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_tiempo)
+                    .addComponent(lbl_cuarto)
+                    .addComponent(lbl_marcador))
+                .addGap(21, 21, 21)
+                .addComponent(lbl_posesion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
@@ -69,9 +109,9 @@ public class simuladorFootball extends javax.swing.JFrame {
 
         jLabel4.setText("vs");
 
-        cb_equipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_equipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "eagles", "lions", "bobcats", "tiguers", "sharks" }));
 
-        cb_rival.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_rival.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "eagles", "lions", "bobcats", "tiguers", "sharks" }));
 
         btn_comenzarJuego.setText("comenzar");
         btn_comenzarJuego.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +135,7 @@ public class simuladorFootball extends javax.swing.JFrame {
                     .addGroup(dialogEquiposLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(cb_rival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(85, 85, 85))))
             .addGroup(dialogEquiposLayout.createSequentialGroup()
@@ -166,14 +206,43 @@ public class simuladorFootball extends javax.swing.JFrame {
         //this.setVisible(false);
         dialogEquipos.setVisible(true);
         dialogEquipos.pack();
-        
+
 // TODO add your handling code here:
     }//GEN-LAST:event_btn_nuevoJuegoActionPerformed
 
     private void btn_comenzarJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_comenzarJuegoActionPerformed
-        dialogEquipos.setVisible(false);
-        dialogNuevoJuego.setVisible(true);
-        dialogNuevoJuego.pack();
+
+        Thread tempJuego = new Thread(() -> {
+            int segundos = 20;
+         //   int cuarto = segundos/4;
+            
+            try {
+                for (int i = 1; i <= segundos; i++) {
+                    System.out.println("Segundo: " + i);
+                    Thread.sleep(1000);
+                    // System.out.println(i);
+                    
+
+                    dialogEquipos.setVisible(false);
+                    dialogNuevoJuego.setVisible(true);
+                    dialogNuevoJuego.pack();
+
+                    lbl_marcador.setText(cb_equipo.getSelectedItem().toString() + " " + " - " + " " + cb_rival.getSelectedItem().toString());
+                    lbl_posesion.setText(cb_equipo.getSelectedItem().toString());
+                    lbl_tiempo.setText("tiempo: "+ i);
+                    lbl_cuarto.setText("cuarto: " + i/4);
+                    
+
+                }
+
+            } catch (InterruptedException e) {
+
+            }
+            // dialogNuevoJuego.setVisible(false);
+
+        });
+
+        tempJuego.start();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_comenzarJuegoActionPerformed
@@ -181,7 +250,7 @@ public class simuladorFootball extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -209,7 +278,20 @@ public class simuladorFootball extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new simuladorFootball().setVisible(true);
+                try {
+                    File audioFile = new File("/Users/Apple/Downloads/NBC-Sunday-Night-Football.wav");
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    clip.start();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+
         });
     }
 
@@ -226,6 +308,10 @@ public class simuladorFootball extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_cuarto;
+    private javax.swing.JLabel lbl_marcador;
+    private javax.swing.JLabel lbl_posesion;
+    private javax.swing.JLabel lbl_tiempo;
     private javax.swing.JTextArea textArea_Acciones;
     // End of variables declaration//GEN-END:variables
 }

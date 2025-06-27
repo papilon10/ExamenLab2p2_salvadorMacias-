@@ -27,26 +27,43 @@ public class simuladorFootball extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btn_nuevoJuego = new javax.swing.JButton();
+        bbnMostarResultado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/examenlab2p2_salvadormacias/Apple-Arcade-hero_big.jpg"))); // NOI18N
+
+        btn_nuevoJuego.setText("nuevo juego");
+
+        bbnMostarResultado.setText("Mostrar Resultado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(356, 356, 356)
-                .addComponent(jLabel1)
-                .addContainerGap(486, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(296, 296, 296)
+                        .addComponent(btn_nuevoJuego)
+                        .addGap(273, 273, 273)
+                        .addComponent(bbnMostarResultado)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(436, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addGap(94, 94, 94))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_nuevoJuego)
+                    .addComponent(bbnMostarResultado))
+                .addGap(44, 44, 44))
         );
 
         pack();
@@ -88,6 +105,8 @@ public class simuladorFootball extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bbnMostarResultado;
+    private javax.swing.JButton btn_nuevoJuego;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

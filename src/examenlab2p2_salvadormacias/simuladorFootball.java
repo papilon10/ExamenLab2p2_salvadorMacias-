@@ -31,6 +31,11 @@ public class simuladorFootball extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea_Acciones = new javax.swing.JTextArea();
         dialogEquipos = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cb_equipo = new javax.swing.JComboBox<>();
+        cb_rival = new javax.swing.JComboBox<>();
+        btn_comenzarJuego = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btn_nuevoJuego = new javax.swing.JButton();
         bbnMostarResultado = new javax.swing.JButton();
@@ -60,15 +65,57 @@ public class simuladorFootball extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
         );
 
+        jLabel3.setText("seleccione un equipo:");
+
+        jLabel4.setText("vs");
+
+        cb_equipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cb_rival.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btn_comenzarJuego.setText("comenzar");
+        btn_comenzarJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_comenzarJuegoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dialogEquiposLayout = new javax.swing.GroupLayout(dialogEquipos.getContentPane());
         dialogEquipos.getContentPane().setLayout(dialogEquiposLayout);
         dialogEquiposLayout.setHorizontalGroup(
             dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGroup(dialogEquiposLayout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(cb_equipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogEquiposLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dialogEquiposLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addComponent(cb_rival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))))
+            .addGroup(dialogEquiposLayout.createSequentialGroup()
+                .addGap(215, 215, 215)
+                .addComponent(btn_comenzarJuego)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         dialogEquiposLayout.setVerticalGroup(
             dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGroup(dialogEquiposLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel3)
+                .addGap(60, 60, 60)
+                .addGroup(dialogEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cb_equipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_rival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(btn_comenzarJuego)
+                .addGap(79, 79, 79))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,11 +164,19 @@ public class simuladorFootball extends javax.swing.JFrame {
 
     private void btn_nuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoJuegoActionPerformed
         //this.setVisible(false);
-        dialogNuevoJuego.setVisible(true);
-        dialogNuevoJuego.pack();
+        dialogEquipos.setVisible(true);
+        dialogEquipos.pack();
         
 // TODO add your handling code here:
     }//GEN-LAST:event_btn_nuevoJuegoActionPerformed
+
+    private void btn_comenzarJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_comenzarJuegoActionPerformed
+        dialogEquipos.setVisible(false);
+        dialogNuevoJuego.setVisible(true);
+        dialogNuevoJuego.pack();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_comenzarJuegoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,11 +215,16 @@ public class simuladorFootball extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bbnMostarResultado;
+    private javax.swing.JButton btn_comenzarJuego;
     private javax.swing.JButton btn_nuevoJuego;
+    private javax.swing.JComboBox<String> cb_equipo;
+    private javax.swing.JComboBox<String> cb_rival;
     private javax.swing.JDialog dialogEquipos;
     private javax.swing.JDialog dialogNuevoJuego;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textArea_Acciones;
     // End of variables declaration//GEN-END:variables
